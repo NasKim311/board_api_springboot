@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/boards")
 @AllArgsConstructor
 public class BoardApi {
     private final BoardService service;
