@@ -53,6 +53,9 @@ public class BoardService {
 
         Board entity = dto.toEntity();
 
+        // 로그인 기능 구현 전 임의의 username 할당
+        entity.setUsername("nas");
+
         repo.saveCustom(entity.getTitle(), entity.getContent(), entity.getUsername());
 
     }
