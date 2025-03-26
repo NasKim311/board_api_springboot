@@ -26,6 +26,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
             "select * from board as b"
                     + " where (:title is null or :title = '' or b.title like concat('%', :title, '%'))"
                     + " and (:username is null or :username = '' or b.username like concat('%', :username, '%'))"
+                    + " order by b.regdate desc"
     )
     Page<Board> findAllWithSearch(@Param("title") String title, @Param("username") String username, Pageable pageable);
 
