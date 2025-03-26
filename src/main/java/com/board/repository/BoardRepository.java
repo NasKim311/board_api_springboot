@@ -16,12 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 public interface BoardRepository extends JpaRepository<Board, Integer> {
 
     // 게시글 목록 조회
+//    @Query(nativeQuery = true, value =
+//            "select * from board as b"
+//                    + " where (:#{#dto.title} = '' or b.title like concat('%', :#{#dto.title}, '%'))"
+//                    + " and (:#{#dto.username} = '' or b.username like concat('%', :#{#dto.username}, '%'))"
+//    )
+//    Page<Board> findAllWithSearch(@Param("dto") BoardSearchDTO dto, Pageable pageable);
     @Query(nativeQuery = true, value =
             "select * from board as b"
-                    + " where (:#{#dto.title} = '' or b.title like %:#{#dto.title}%)"
-                    + " and (:#{#dto.username} = '' or b.username like %:#{#dto.username}%)"
+                    + " where (:title is null or :title = '' or b.title like concat('%', :title, '%'))"
+                    + " and (:username is null or :username = '' or b.username like concat('%', :username, '%'))"
     )
-    Page<Board> findAllWithSearch(@Param("dto") BoardSearchDTO dto, Pageable pageable);
+    Page<Board> findAllWithSearch(@Param("title") String title, @Param("username") String username, Pageable pageable);
 
     // 게시글 상세 조회
 //    @Query("select b from Board as b where b.id = :id")

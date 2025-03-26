@@ -24,9 +24,10 @@ import java.util.ArrayList;
 public class BoardService {
     private final BoardRepository repo;
 
-    public Page<BoardDTO> getList(BoardSearchDTO search, Pageable pageable) throws Exception {
+    public Page<BoardDTO> getList(BoardSearchDTO dto, Pageable pageable) throws Exception {
 
-        Page<Board> list = repo.findAllWithSearch(search, pageable);
+//        Page<Board> list = repo.findAllWithSearch(dto, pageable);
+        Page<Board> list = repo.findAllWithSearch(dto.getTitle(), dto.getUsername(), pageable);
         ArrayList<BoardDTO> newList = new ArrayList<>();
 
         for (Board entity : list.getContent()) {
