@@ -43,9 +43,18 @@ public class BoardService {
 
     public BoardDTO get(int id) throws Exception {
 
+        // id로 상세 데이터 조회
         Board entity = repo.findById(id).orElseThrow(() -> new EntityNotFoundException("데이터를 찾을 수 없습니다."));
 
-        return BoardDTO.toDto(entity);
+        // 이전글과 다음글 ID 조회
+        Integer previousId = repo.findPreviousId(id);
+        Integer nextId = repo.findNextId(id);
+
+        BoardDTO boardDTO = BoardDTO.toDto(entity);
+        boardDTO.setPreviousId(previousId);
+        boardDTO.setNextId(nextId);
+
+        return boardDTO;
 
     }
 

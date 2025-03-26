@@ -21,6 +21,10 @@ public class BoardDTO {
 
     private Date moddate;   // 게시판 수정일
 
+    private int previousId; // 이전글 id
+
+    private int nextId; // 다음글 id
+
     public Board toEntity() {
 
         Board entity = new Board();

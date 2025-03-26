@@ -30,10 +30,6 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     )
     Page<Board> findAllWithSearch(@Param("title") String title, @Param("username") String username, Pageable pageable);
 
-    // 게시글 상세 조회
-//    @Query("select b from Board as b where b.id = :id")
-//    Board findById(@Param("id") int id);
-
     // 게시글 저장
     @Modifying
     @Transactional
@@ -46,11 +42,12 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     @Query(value = "update board set title = :title, content = :content, moddate = CURRENT_TIMESTAMP where id = :id", nativeQuery = true)
     void updateCustom(@Param("id") int id, @Param("title") String title, @Param("content") String content);
 
+    // 이전 게시글 id 조회
+    @Query(nativeQuery = true, value ="select id from board where id < :id order by id desc limit 1")
+    Integer findPreviousId(@Param("id") int id);
 
-    // 게시글 삭제
-//    @Modifying
-//    @Transactional
-//    @Query("delete from Board as b where b.id = :id")
-//    void deleteById(@Param("id") String id);
+    // 다음 게시글 id 조회
+    @Query(nativeQuery = true, value ="select id from board where id > :id order by id asc limit 1")
+    Integer findNextId(@Param("id") int id);
 
 }
