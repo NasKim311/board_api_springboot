@@ -51,8 +51,10 @@ public class BoardService {
         Integer nextId = repo.findNextId(id);
 
         BoardDTO boardDTO = BoardDTO.toDto(entity);
-        boardDTO.setPreviousId(previousId);
-        boardDTO.setNextId(nextId);
+
+        // null일 경우 기본값 설정 (예: -1)
+        boardDTO.setPreviousId(previousId != null ? previousId : -1);
+        boardDTO.setNextId(nextId != null ? nextId : -1);
 
         return boardDTO;
 
